@@ -19,8 +19,11 @@ a {
 }
 .main {
   padding: 40px;
+  background-image: url(../image/bg.png);
+  background-size: cover;
 }
 .main .user-list {
+  background-color: #fff;
   margin-left: 20px;
   width: 100%;
   font-size: 18px;

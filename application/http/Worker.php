@@ -8,6 +8,9 @@ use app\index\model\Users;
 class Worker extends Server
 {  
     protected $socket = 'websocket://0.0.0.0:8123';
+    protected $name = 'zyz';
+
+    public $user = [];
 
     public function onWorkerStart(){
         
@@ -19,6 +22,14 @@ class Worker extends Server
     
     public function onMessage($connection,$data)
 	{
-		$connection->send(json_encode($data));
-	}
+        $data = json_decode($data);
+        if($data['type'] == 'connect'){
+            $user = Users::where('token',$data['token'])->find();
+            
+        }
+    }
+    
+    public function onClose($connection){
+
+    }
 }

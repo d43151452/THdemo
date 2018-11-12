@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>聊天室</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+    <p class="title">
+        欢迎您，尊敬的会员，{:session('uname')} 
+        <a href="logout.html">退出</a> 
+        <a href="/">返回用户列表</a>
+    </p>
+    <div class="main">
+        <div class="list">
+            <ul>
+                <li id="list0" class="list-active" onclick="change(0)"><a href="javascript:;">所有人</a></li>
+                {foreach $user as $k => $v}
+                {if $v.id != session('user_id')}
+                    <li id="list{$v.id}" onclick="change('{$v.id}')"><a href="javascript:;">{$v.uname}</a></li>
+                {/if}
+                {/foreach}
+            </ul>
+        </div>
+        <ul class="content">
+            <li id="content0" class="content-active">
+                <div class="content-title">所有人</div>
+            </li>
+            {foreach $user as $k => $v}
+            {if $v.id != session('user_id')}
+            <li id="content{$v.id}">
+                <div class="content-title">与<i style="color:red">{$v.uname}</i>的聊天</div>
+            </li>
+            {/if}
+            {/foreach}
+        </ul>
+        <div class="input">
+            <textarea name="" maxlength="255" id="input" cols="30" rows="10"></textarea>
+            <button >发送</button>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    document.onkeydown = function(e){
+        if(e.keyCode == 13){
+            sendMessage();
+        }
+    }
+    var online = false;
+    var token = "{:session('token')}";
+    var user_id = "{:session('user_id')}";
+    var get_id = 0;
+    var ws = new WebSocket('ws://localhost:8123');
+    ws.onopen = function(evt){
+        online = true;
+        ws.send(JSON.stringify({type:'connect',token:token,user_id:user_id}));
+    }
+    ws.onmessage = function (evt){
+        console.log(evt);
+    }
+    ws.onclose = function (evt){
+        alert('连接失败请刷新重试');
+        online = false;
+    }
+    ws.onerror = function (evt){
+        alert('连接失败请刷新重试');
+    }
+    function change(id){
+        get_id = id;
+        $('#content'+id).addClass('content-active').siblings().removeClass('content-active');
+        $('#list'+id).addClass('list-active').siblings().removeClass('list-active');
+    }
+
+    function sendMessage(){
+
+    }
+
+
+</script>

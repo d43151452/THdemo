@@ -129,10 +129,20 @@ class Index extends Controller
             return $this->error($validate->getError());
         }
 
+        $info = Users::where('uname',$data['uname'])->find();
+        if($info != null){
+            return $this->error('用户名被占用');
+        }
+
         $info = Users::where('id', $id)->update($data);
         if($info){
             return $this->success('修改成功','/');
         }
         return $this->error('修改失败');
+    }
+
+    public function chat(){
+        $data['user'] = users::select();
+        return view('', $data);
     }
 }

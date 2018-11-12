@@ -18,6 +18,7 @@ Route::get('/logout', 'index/Index/logout');
 Route::get('/userEdit/:id', 'index/Index/userEdit');
 Route::post('/userUpdate/:id', 'index/Index/userUpdate');
 Route::get('/userDel/:id', 'index/Index/userDel');
+Route::get('/chat', 'index/Index/chat');
 
 return [
 
