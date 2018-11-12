@@ -16,10 +16,13 @@
     <div class="main">
         <div class="list">
             <ul>
-                <li id="list0" class="list-active" onclick="change(0)"><a href="javascript:;">所有人</a></li>
+                <li id="list0" class="list-active" onclick="change(0)"><a href="javascript:;">所有人</a><i class="ball">!</i></li>
                 {foreach $user as $k => $v}
                 {if $v.id != session('user_id')}
-                    <li id="list{$v.id}" onclick="change('{$v.id}')"><a href="javascript:;">{$v.uname}</a></li>
+                    <li id="list{$v.id}" onclick="change('{$v.id}')">
+                        <a href="javascript:;">{$v.uname}</a>
+                        <i class="ball">!</i>
+                    </li>
                 {/if}
                 {/foreach}
             </ul>
@@ -27,18 +30,24 @@
         <ul class="content">
             <li id="content0" class="content-active">
                 <div class="content-title">所有人</div>
+                <ul class="message">
+
+                </ul>
             </li>
             {foreach $user as $k => $v}
             {if $v.id != session('user_id')}
             <li id="content{$v.id}">
                 <div class="content-title">与<i style="color:red">{$v.uname}</i>的聊天</div>
+                <ul class="message">
+
+                </ul>
             </li>
             {/if}
             {/foreach}
         </ul>
         <div class="input">
             <textarea name="" maxlength="255" id="input" cols="30" rows="10"></textarea>
-            <button >发送</button>
+            <button onclick="sendMessage()">发送</button>
         </div>
     </div>
 </body>
@@ -53,30 +62,73 @@
     var online = false;
     var token = "{:session('token')}";
     var user_id = "{:session('user_id')}";
+    var user_name = "{:session('uname')}";
     var get_id = 0;
     var ws = new WebSocket('ws://localhost:8123');
+
     ws.onopen = function(evt){
         online = true;
-        ws.send(JSON.stringify({type:'connect',token:token,user_id:user_id}));
+        ws.send(JSON.stringify({type:'connect',token:token}));
     }
     ws.onmessage = function (evt){
-        console.log(evt);
+        let data = JSON.parse(evt.data);
+        console.log(data);
+        if(data.type == 'error'){
+            alert(data.data);
+        }else if(data.type == 'connect'){
+            alert(data.data);
+        }else if(data.type == 'msgsuccess'){
+            let message = $('#input').val();
+            console.log($('#content'+get_id+' .message'));
+            $('#content'+get_id+' .message').append('<li>你说:<br>'+message+'</li>');
+            $('#input').val('');
+        }else if(data.type == 'get'){
+            $('#content'+data.send_id+' .message').append('<li>'+data.send_name+'说:<br>'+data.message+'</li>');
+            if(!$('#list'+data.send_id).hasClass('list-active')){
+                $('#list'+data.send_id+' .ball').css('display','inline-block');
+            }
+        }else if(data.type == 'all'){
+            $('#content0 .message').append('<li>'+data.send_name+'说:<br>'+data.message+'</li>');
+            if(!$('#list0').hasClass('list-active')){
+                $('#list0 .ball').css('display','inline-block');
+            }
+        }
     }
+
     ws.onclose = function (evt){
-        alert('连接失败请刷新重试');
+        // alert('连接失败请刷新重试');
         online = false;
     }
+
     ws.onerror = function (evt){
-        alert('连接失败请刷新重试');
+        // alert('连接失败请刷新重试');
     }
+
     function change(id){
         get_id = id;
         $('#content'+id).addClass('content-active').siblings().removeClass('content-active');
         $('#list'+id).addClass('list-active').siblings().removeClass('list-active');
+        $('#list'+id+' .ball').css('display','none');
     }
 
     function sendMessage(){
-
+        if(!online){
+            alert('请连接后重试');
+            return;
+        }
+        let message = $('#input').val();
+        if(message==''){
+            alert('不可为空');
+            return;
+        }
+        ws.send(JSON.stringify(
+            {
+                type:'message',
+                get_id:get_id,
+                send_id:user_id,
+                send_name:user_name,
+                message:message,
+            }));
     }
 
 
