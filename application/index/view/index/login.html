@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="main">
+        <div class="login">
+            <div class="message">欢迎登陆THdemo系统</div>
+            <form method="POST" action="/doLogin.html">
+                <input class="mark" type="text" name="uname" placeholder="用户名">
+                <input class="mark" type="password" name="password" placeholder="密码">
+                <input class="seven" type="checkbox" name="seven_day" id="seven_day">
+                <label class="seven" for="seven_day">7天内自动登录</label>
+                <div class="label">
+                    <label class="submit" for="sbmt">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</label>
+                    <label class="register" for="register">注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册</label>
+                </div>
+                <input type="submit" id="sbmt" style="display:none;">
+            </form>
+            <button id="register" onclick="location.href='/register.html'"></button>
+        </div>
+    </div>
+</body>
+</html>

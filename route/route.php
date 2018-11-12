@@ -9,11 +9,15 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
-
-Route::get('hello/:name', 'index/hello');
+Route::get('/', 'index/Index/index');
+Route::get('/login', 'index/Index/login');
+Route::post('/doLogin', 'index/Index/doLogin');
+Route::get('/register', 'index/Index/register');
+Route::post('/doRegister', 'index/Index/doRegister');
+Route::get('/logout', 'index/Index/logout');
+Route::get('/userEdit/:id', 'index/Index/userEdit');
+Route::post('/userUpdate/:id', 'index/Index/userUpdate');
+Route::get('/userDel/:id', 'index/Index/userDel');
 
 return [
 

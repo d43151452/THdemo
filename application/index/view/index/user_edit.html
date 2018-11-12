@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户修改</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/edit.css">
+</head>
+<body>
+    <form method="POST" action="/userUpdate/{$Request.param.id}.html">
+        <h1>用户修改</h1>
+        用户名：<input type="text" required max="10" name="uname" value="{$user.uname}" class="mark" placeholder="用户名"><br>
+        手机号：<input type="text" required min="11" max="11" name="tel_num" class="mark" value="{$user.tel_num}" placeholder="手机号">
+        <div class="label">
+            <label for="sbmt" class="submit">确认修改</label>
+            <label for="cancel" class="cancel">取消</label>
+        </div>
+        <input type="submit" id="sbmt" style="display:none">
+    </form>
+    <button onclick="history.go(-1)" style="display:none"></button>
+</body>
+</html>

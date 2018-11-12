@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <p class="title">欢迎您，尊敬的会员，{:session('uname')} <a href="logout.html">退出</a> <a href="logout.html">进入聊天室</a></p>
+    <div class="main">
+        <table class="user-list">
+            <tr>
+                <td>id</td>
+                <td>用户名</td>
+                <td>手机号</td>
+                <td>注册时间</td>
+                <td>操作</td>
+            </tr>
+            {foreach $user as $k => $v}
+            <tr>
+                <td>{$v.id}</td>
+                <td>{$v.uname}</td>
+                <td>{$v.tel_num}</td>
+                <td>{$v.reg_time}</td>
+                <td><a href="/userEdit/{$v.id}.html">修改</a><a href="/userDel/{$v.id}.html">删除</a></td>
+            </tr>
+            {/foreach}
+        </table>
+    </div>
+    
+</body>
+</html>

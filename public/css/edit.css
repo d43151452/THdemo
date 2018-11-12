@@ -1,0 +1,41 @@
+form{
+    padding: 40px;
+    margin: 40px;
+    border-left: 1px solid #ccc;
+}
+.mark{
+    width: 200px;
+    height: 50px;
+    font-size: 14px;
+    padding-left: 20px;
+    margin-top: 35px;
+    border: 1px solid #DCDEE0;
+    border-radius: 3px;
+}
+.label{
+    margin-top: 35px;
+}
+h1{
+    font-size: 18px;
+}
+
+label{
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #337ab7;
+}
+
+.submit{
+    background-color: #337ab7;
+    color: #fff;
+    margin-left: 20px;
+}
+.cancel{
+    background-color: #eee;
+    margin-left: 40px;
+}
