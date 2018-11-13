@@ -13,14 +13,6 @@ class Worker extends Server
     protected $name = 'zyz';
 
     public $user = [];
-
-    public function onWorkerStart(){
-        
-    }
-    public function onConnect($connection)
-	{
-
-    }
     
     public function onMessage($connection,$data)
 	{
@@ -37,7 +29,7 @@ class Worker extends Server
 
         }else if($data->type == 'message'){
             if($data->get_id == 0){
-                $connection->send(json_encode(['type'=>'msgsuccess2']));
+                $connection->send(json_encode(['type'=>'msgsuccess']));
                 foreach($this->user as $k => $v){
                     $v->send(json_encode([
                         'type'=>'all',
