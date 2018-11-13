@@ -23,7 +23,7 @@ CREATE TABLE `chat` (
   `send_id` int(11) NOT NULL,
   `send_name` varchar(255) NOT NULL,
   `get_id` int(11) NOT NULL,
-  `send_time` int(11) NOT NULL,
+  `send_time` datetime NOT NULL,
   `message` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
