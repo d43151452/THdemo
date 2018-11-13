@@ -80,15 +80,15 @@
         }else if(data.type == 'msgsuccess'){
             let message = $('#input').val();
             console.log($('#content'+get_id+' .message'));
-            $('#content'+get_id+' .message').append('<li>你说:<br>'+message+'</li>');
+            $('#content'+get_id+' .message').append('<li>你说:<br>'+message+'</li>').scrollTop($('#content'+get_id+' .message')[0].scrollHeight);
             $('#input').val('');
         }else if(data.type == 'get'){
-            $('#content'+data.send_id+' .message').append('<li>'+data.send_name+'说:<br>'+data.message+'</li>');
+            $('#content'+data.send_id+' .message').append('<li>'+data.send_name+'说:<br>'+data.message+'</li>').scrollTop($('#content'+get_id+' .message')[0].scrollHeight);
             if(!$('#list'+data.send_id).hasClass('list-active')){
                 $('#list'+data.send_id+' .ball').css('display','inline-block');
             }
-        }else if(data.type == 'all'){
-            $('#content0 .message').append('<li>'+data.send_name+'说:<br>'+data.message+'</li>');
+        }else if(data.type == 'all' && data.send_id != user_id){
+            $('#content0 .message').append('<li>'+data.send_name+'说:<br>'+data.message+'</li>').scrollTop($('#content'+get_id+' .message')[0].scrollHeight);
             if(!$('#list0').hasClass('list-active')){
                 $('#list0 .ball').css('display','inline-block');
             }

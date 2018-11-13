@@ -37,6 +37,7 @@ class Worker extends Server
 
         }else if($data->type == 'message'){
             if($data->get_id == 0){
+                $connection->send(json_encode(['type'=>'msgsuccess2']));
                 foreach($this->user as $k => $v){
                     $v->send(json_encode([
                         'type'=>'all',
@@ -45,7 +46,7 @@ class Worker extends Server
                         'message'=>$data->message
                     ]));
                 }
-                Chat::create([
+                $sql = Chat::create([
                     'send_id'=>$data->send_id,
                     'get_id'=>$data->get_id,
                     'send_time'=>Db::raw('now()'),
